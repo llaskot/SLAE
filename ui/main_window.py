@@ -56,26 +56,27 @@ def main(page: ft.Page):
                 ft.Container(
                     content=ft.DataTable(
                         columns=[
-                            ft.DataColumn(ft.Text("Method")),
-                            ft.DataColumn(ft.Text("On")),
-                            ft.DataColumn(ft.Text("process")),
-                            ft.DataColumn(ft.Text("check")),
+                            ft.DataColumn(ft.Text("Method", text_align=ft.TextAlign.CENTER)),
+                            ft.DataColumn(ft.Text("On", text_align=ft.TextAlign.CENTER)),
+                            ft.DataColumn(ft.Text("process", text_align=ft.TextAlign.CENTER)),
+                            ft.DataColumn(ft.Text("check", text_align=ft.TextAlign.CENTER)),
                         ],
                         rows=[
                             ft.DataRow(
                                 cells=[
-                                    ft.DataCell(ft.Text('row1')),
-                                    ft.DataCell(ft.Checkbox()),
-                                    ft.DataCell(ft.Checkbox()),
-                                    ft.DataCell(ft.Checkbox()),
-                                ]
+                                    ft.DataCell(ft.Text('Cramer\'s', text_align=ft.TextAlign.CENTER)),
+                                    act.checkboxes.ckb_block['cramer'][0],
+                                    act.checkboxes.ckb_block['cramer'][1],
+                                    act.checkboxes.ckb_block['cramer'][2],
+                                ],
+
                             ),
                             ft.DataRow(
                                 cells=[
-                                    ft.DataCell(ft.Text('row2')),
-                                    ft.DataCell(ft.Checkbox()),
-                                    ft.DataCell(ft.Checkbox()),
-                                    ft.DataCell(ft.Checkbox()),
+                                    ft.DataCell(ft.Text('Gauss\'s', text_align=ft.TextAlign.CENTER)),
+                                    act.checkboxes.ckb_block['gauss'][0],
+                                    act.checkboxes.ckb_block['gauss'][1],
+                                    act.checkboxes.ckb_block['gauss'][2],
 
                                 ]
                             )
@@ -88,7 +89,7 @@ def main(page: ft.Page):
 
                 # Колонка 4 (оранжевый фон)
                 ft.Container(
-                    content=ft.Button("Get solutions", color="white"),
+                    content=act.btn_get_solution,
                     bgcolor=ft.Colors.ORANGE,
                     padding=10,
                     border_radius=5,

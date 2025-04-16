@@ -19,18 +19,13 @@ class Gauss:
 
     def update_matrix(self):
         for i in range(1, self.length):
-            # print('NEW')
-            # for row in self.converted_matrix:
-            # print(row)
             for j in range(i):
-                # print (self.converted_matrix[i])
                 if self.converted_matrix[i][j] == 0:
                     continue
                 if self.converted_matrix[i - 1][j] == 0 and i - 1 == j:
                     self.converted_matrix[i], self.converted_matrix[i - 1] = \
                         self.converted_matrix[i - 1], self.converted_matrix[i]
                     continue
-                # print('i=', i, 'j=', j)
                 coef = self.get_coefficient(i, j)
                 self.get_temp_row(coef, j)
                 self.converted_matrix[i] = [x + y for x, y in zip(self.converted_matrix[i], self.temp_row)]
@@ -45,15 +40,46 @@ class Gauss:
             for row in self.converted_matrix:
                 row[-2] = row[-1] - row[-2] * res
                 row.pop()
-                print(row)
+                # print(row)
             i -= 1
         self.result = solution
-        print(solution)
+        # print(solution)
 
+    def decorate_result(self) -> str:
+        if not self.result:
+            self.get_result()
+        temp = []
+        for key, val in self.result.items():
+            temp.append(f'X[{str(key)}] = {str(val)}')
+        temp.reverse()
+        return '\n'.join(temp)
 
-    def check_result(self):
-        for row in self.matrix:
-            count = 0
-            for i in range(1, self.length+1):
-                count += row[i-1] * self.result[i]
-            print(count)
+    def check_result(self, row):
+        count = 0
+        for i in range(1, self.length + 1):
+            count += self.matrix[row][i - 1] * self.result[i]
+        return count
+
+    def to_print_check(self):
+        res = [[] for _ in range(self.length)]
+        for i in range(self.length):
+            for j in range(self.length):
+                if self.matrix[i][j] < 0:
+                    if j == 0:
+                        res[i].append(f'{str(self.matrix[i][j])}*{str(self.result[j + 1])}')
+                        continue
+                    res[i].append('-')
+                    res[i].append(f'{str(self.matrix[i][j]*-1)}*{str(self.result[j + 1])}')
+                else:
+                    if j > 0:
+                        res[i].append('+')
+                    res[i].append(f'{str(self.matrix[i][j])}*{str(self.result[j + 1])}')
+            res[i].append('=')
+            res[i].append(str(self.check_result(i)))
+            res[i].append('expected result: ')
+            res[i].append(str(self.matrix[i][-1]))
+        temp = [' '.join(x) for x in res]
+        res_str = '\n'.join(temp)
+
+        return res_str
+

@@ -6,7 +6,7 @@ def process_line(line: str) -> list[Fraction]:
     try:
         matr_row = [Fraction(val) for val in str_row]
     except ValueError as e:
-        print(e)
+        # print(e)
         return []
     return matr_row
 
@@ -43,26 +43,27 @@ def to_print(matrix: ()) -> ():
         for i in range(matrix[1]):
             if matrix[0][j][i] < 0:
                 if len(slae[j]) == 0:
-                    slae[j].append(str_matrix[j][i])
+                    slae[j].append(f'{str_matrix[j][i]}X[{i + 1}]')
+                    continue
                 slae[j].append('-')
                 if matrix[0][j][i] == -1:
-                    slae[j].append(f'X({i + 1})')
+                    slae[j].append(f'X[{i + 1}]')
                 else:
-                    slae[j].append(f'{str_matrix[j][i][1:]}X({i + 1})')
+                    slae[j].append(f'{str_matrix[j][i][1:]}X[{i + 1}]')
             elif matrix[0][j][i] == 0:
                 continue
             else:
                 if len(slae[j]) > 0:
                     slae[j].append('+')
                 if matrix[0][j][i] == 1:
-                    slae[j].append(f'X({i + 1})')
+                    slae[j].append(f'X[{i + 1}]')
                 else:
-                    slae[j].append(f'{str_matrix[j][i]}X({i + 1})')
+                    slae[j].append(f'{str_matrix[j][i]}X[{i + 1}]')
 
         slae[j].append('=')
         slae[j].append(str_matrix[j][-1])
     temp = [' '.join(x) for x in slae]
-    slae_str = '\nSLAE:9 \n' + '\n'.join(temp)
+    slae_str = '\nSLAE: \n' + '\n'.join(temp)
     return matr, slae_str
 
 
