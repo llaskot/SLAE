@@ -49,9 +49,8 @@ class Gauss:
         if not self.result:
             self.get_result()
         temp = []
-        for key, val in self.result.items():
-            temp.append(f'X[{str(key)}] = {str(val)}')
-        temp.reverse()
+        for i in range(1, self.length+1):
+            temp.append(f'X[{str(i)}] = {str(self.result[i])}')
         return '\n'.join(temp)
 
     def check_result(self, row):

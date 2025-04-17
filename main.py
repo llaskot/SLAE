@@ -2,15 +2,22 @@ from math_methods.gauss import Gauss
 from functions.process_file import get_matrix, to_print
 from fractions import Fraction
 from math_methods.validation import Validation
+from math_methods.cramer import Cramer
 
 if __name__ == '__main__':
 
 
-    mat = get_matrix('slae3')
+    mat = get_matrix('slae')
+    c = Cramer(mat)
+    c.get_result()
+    print(c.decorate_result())
+    print(c.to_print_check())
+
+
     # print(mat)
-    va = Validation(mat)
-    va.get_square_matrix()
-    print(va.get_determinant())
+    # va = Validation(mat)
+    # va.get_square_matrix()
+    # print(va.get_determinant())
 
     # gs = Gauss(get_matrix('slae5'))
 
@@ -37,5 +44,7 @@ if __name__ == '__main__':
     # print(gs.decorate_result())
     #
     # gs.check_result()
+
+
 
     pass
