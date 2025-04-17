@@ -27,6 +27,16 @@ class Interactive:
         self.matrix = None
         self.checkboxes = Checkboxes()
         self.btn_get_solution = ft.Button("Get solutions", color="white", on_click=self.get_solution)
+        self.btn_clear = ft.ElevatedButton('Erase history',
+                                           width=250,
+                                           height=20,
+                                           bgcolor="#181e15",
+                                           on_click=self.erase_history)
+
+    def erase_history(self, e):
+        self.history.clear()
+        self.update_output('')
+
 
     def pick_file(self, event):
         self.file_picker.pick_files()

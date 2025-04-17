@@ -10,10 +10,7 @@ def main(page: ft.Page):
     page.add(file_picker)
     act = Interactive(file_picker)
     popup = Popup(page, act)
-
-
     btn_manual_input = ft.IconButton(ft.Icons.KEYBOARD, on_click=popup.open)
-
     row = ft.Container(
         content=ft.Row(
             controls=[
@@ -102,7 +99,7 @@ def main(page: ft.Page):
             ],
 
         ),
-        bgcolor="#2f2f2f",
+        bgcolor="#181e15",
         padding=5,
         height=250
     )
@@ -119,8 +116,10 @@ def main(page: ft.Page):
         # bgcolor=ft.Colors.TEAL
 
     ))
+    page.add(act.btn_clear)
 
     page.add(act.output)
+
 
 
 if __name__ == "__main__":

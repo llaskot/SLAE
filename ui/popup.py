@@ -2,7 +2,6 @@ from fractions import Fraction
 import flet as ft
 
 from functions.process_file import to_print
-from interactions import Interactive
 
 
 class Popup:
@@ -10,7 +9,6 @@ class Popup:
         self.act = act
         self.page = page
         self.field_names = []
-
         self.field_var_number = ft.TextField(
             value="2",
             width=60,
@@ -24,14 +22,12 @@ class Popup:
         )
 
         self.matrix = []
-        # self.matrix_dict = None
         self.matrix_len = 0
         self.dialog = None  # Пока нет попапа
         self.fields = {}
 
     def open(self, e=None):  # e=None для вызова вручную
         self.matrix_len = int(self.field_var_number.value)
-        # print(self.matrix_len)
         self.create_matrix()
         self.create_popup()
         self.dialog.open = True
@@ -94,7 +90,6 @@ class Popup:
             for name in self.field_names[i]:
                 res.append(Fraction(self.fields[name].value))
             self.matrix.append(res)
-        # print(self.matrix)
 
     def create_popup(self):
         """Создает попап"""
@@ -119,8 +114,6 @@ class Popup:
         self.page.update()
 
     def create_matrix(self):
-        # self.matrix = [[0 for _ in range(self.matrix_len + 1)] for _ in range(self.matrix_len)]
-
         self.field_names.clear()
         for i in range(self.matrix_len):
 
@@ -130,4 +123,3 @@ class Popup:
             temp.append(f'{i}res')
 
             self.field_names.append(temp)
-        print(self.field_names)

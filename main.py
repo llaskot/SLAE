@@ -1,10 +1,19 @@
 from math_methods.gauss import Gauss
 from functions.process_file import get_matrix, to_print
 from fractions import Fraction
+from math_methods.validation import Validation
 
 if __name__ == '__main__':
 
-    gs = Gauss(get_matrix('slae5'))
+
+    mat = get_matrix('slae3')
+    # print(mat)
+    va = Validation(mat)
+    va.get_square_matrix()
+    print(va.get_determinant())
+
+    # gs = Gauss(get_matrix('slae5'))
+
     # for row in gs.matrix:
     #     print(row)
 
@@ -13,19 +22,19 @@ if __name__ == '__main__':
 
 
 
-    gs.update_matrix()
-    print('RESULT')
-    # for row in gs.converted_matrix:
-    #     print(row)
-    upd_matrix = gs.converted_matrix
-    tp = to_print((upd_matrix, len(upd_matrix)))
-    print(tp[0])
-    print(tp[1])
+    # gs.update_matrix()
+    # print('RESULT')
+    # # for row in gs.converted_matrix:
+    # #     print(row)
+    # upd_matrix = gs.converted_matrix
+    # tp = to_print((upd_matrix, len(upd_matrix)))
+    # print(tp[0])
+    # print(tp[1])
 
 
     # print('RESULT')
     #
-    print(gs.decorate_result())
+    # print(gs.decorate_result())
     #
     # gs.check_result()
 
