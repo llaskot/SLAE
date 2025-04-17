@@ -1,5 +1,6 @@
 import flet as ft
 from interactions import Interactive
+from popup import Popup
 
 
 def main(page: ft.Page):
@@ -8,6 +9,10 @@ def main(page: ft.Page):
     file_picker = ft.FilePicker()
     page.add(file_picker)
     act = Interactive(file_picker)
+    popup = Popup(page, act)
+
+
+    btn_manual_input = ft.IconButton(ft.Icons.KEYBOARD, on_click=popup.open)
 
     row = ft.Container(
         content=ft.Row(
@@ -20,8 +25,8 @@ def main(page: ft.Page):
                             ft.Row(
                                 [
                                     ft.Text('Fill in Manually', size=20),
-                                    act.field_var_number,
-                                    act.btn_manual_input
+                                    popup.field_var_number,
+                                    btn_manual_input
                                 ],
                                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
 
@@ -50,8 +55,6 @@ def main(page: ft.Page):
                     border_radius=5,
                     expand=True
                 ),
-
-                # Колонка 3 (фиолетовый фон)
 
                 ft.Container(
                     content=ft.DataTable(

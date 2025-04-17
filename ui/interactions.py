@@ -3,20 +3,9 @@ from functions.process_file import get_matrix, to_print
 from checkboxes import Checkboxes
 from math_methods.gauss import Gauss
 
-
 class Interactive:
     def __init__(self, file_picker):
-        self.field_var_number = ft.TextField(
-            value="2",
-            width=60,
-            keyboard_type=ft.KeyboardType.NUMBER,
-            max_length=2,
-            text_align=ft.TextAlign.CENTER,
-            height=30,
-            text_size=15,
-            content_padding=ft.Padding(0, 4, 0, 0)
-        )
-        self.btn_manual_input = ft.IconButton(ft.Icons.KEYBOARD)
+
         self.btn_select_file = ft.IconButton(ft.Icons.FOLDER, on_click=self.pick_file)
         self.file_picker = file_picker
         self.file_picker.on_result = self.file_picker_result
@@ -88,3 +77,5 @@ class Interactive:
                 tp = to_print((upd_matrix, len(upd_matrix)))
                 self.update_output('\nIN PROCESS STAGE:', tp[0], tp[1],'\nROOTS:',  gs.decorate_result(),
                                    '\nCHECKUP:', gs.to_print_check())
+
+
