@@ -3,15 +3,29 @@ from functions.process_file import get_matrix, to_print
 from fractions import Fraction
 from math_methods.validation import Validation
 from math_methods.cramer import Cramer
+from math_methods.gauss_jordan import GaussJordan
 
 if __name__ == '__main__':
 
 
     mat = get_matrix('slae')
-    c = Cramer(mat)
-    c.get_result()
-    print(c.decorate_result())
-    print(c.to_print_check())
+    print(to_print(mat)[0])
+    gj = GaussJordan(mat)
+    gj.update_matrix()
+    gj.upgrade_diagonal()
+    print(to_print((gj.converted_matrix, len(gj.converted_matrix)))[0])
+    gj.upgrade_top()
+    print(to_print((gj.converted_matrix, len(gj.converted_matrix)))[0])
+    gj.get_result()
+    print(gj.decorate_result())
+    print(gj.to_print_check())
+
+
+
+    # c = Cramer(mat)
+    # c.get_result()
+    # print(c.decorate_result())
+    # print(c.to_print_check())
 
 
     # print(mat)
