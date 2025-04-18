@@ -20,3 +20,8 @@ class Cramer(Gauss):
                 temp[j][i] = self.b_matrix[j][0]
             self.determinants.append(self.vld.obtain_determinant(temp))
             self.result[i + 1] = self.determinants[i] / self.determinant
+
+    def show_process(self):
+        d = f'Determinant:\nD = {self.determinant}\nCramer’s minors:\n'
+        cd = [f'D[X{i+1}] = {self.determinants[i]}' for i in range(self.length)]
+        return d + '\n'.join(cd)
