@@ -3,6 +3,7 @@ from functions.process_file import get_matrix, to_print
 from checkboxes import Checkboxes
 from math_methods.gauss import Gauss
 from math_methods.cramer import Cramer
+from math_methods.gauss_jordan import GaussJordan
 
 
 class Interactive:
@@ -63,10 +64,13 @@ class Interactive:
     def get_solution(self, event):
         ckb_status = self.checkboxes.get_status()
         print(ckb_status)
-        if any(ckb_status['gauss']):
-            self.gauss_results(ckb_status['gauss'])
         if any(ckb_status['cramer']):
             self.cramer_results(ckb_status['cramer'])
+        if any(ckb_status['gauss']):
+            self.gauss_results(ckb_status['gauss'])
+        if any(ckb_status['gauss_jordan']):
+            self.gauss_jordan_results(ckb_status['gauss_jordan'])
+
 
     def gauss_results(self, status):
         a = ('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n'
@@ -95,6 +99,49 @@ class Interactive:
                 tp = to_print((upd_matrix, len(upd_matrix)))
                 self.update_output('\nIN PROCESS STAGE:', tp[0], tp[1], '\nROOTS:', gs.decorate_result(),
                                    '\nCHECKUP:', gs.to_print_check())
+
+
+    def gauss_jordan_results(self, status):
+        a = ('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n'
+             'GAUSS-JORDAN METHOD RESULTS:\n'
+             '--------------------------------------------------------------------')
+        self.update_output(a)
+        match status:
+            case [True, False, False]:
+                gj = GaussJordan(self.matrix)
+                gj.update_matrix()
+                gj.upgrade_diagonal()
+                gj.upgrade_top()
+                self.update_output('\nROOTS:', gj.decorate_result())
+            case [_, True, False]:
+                gj = GaussJordan(self.matrix)
+                gj.update_matrix()
+                gj.upgrade_diagonal()
+                gj.upgrade_top()
+                gj.get_result()
+                upd_matrix = gj.converted_matrix
+                tp = to_print((upd_matrix, len(upd_matrix)))
+                self.update_output('\nIN PROCESS STAGE:', tp[0], tp[1], '\nROOTS:', gj.decorate_result())
+            case [_, False, True]:
+                gj = GaussJordan(self.matrix)
+                gj.update_matrix()
+                gj.upgrade_diagonal()
+                gj.upgrade_top()
+                self.update_output('\nROOTS:', gj.decorate_result(), '\nCHECKUP:', gj.to_print_check())
+            case [_, True, True]:
+                gj = GaussJordan(self.matrix)
+                gj.update_matrix()
+                gj.upgrade_diagonal()
+                gj.upgrade_top()
+                gj.get_result()
+                upd_matrix = gj.converted_matrix
+                tp = to_print((upd_matrix, len(upd_matrix)))
+                self.update_output('\nIN PROCESS STAGE:', tp[0], tp[1], '\nROOTS:', gj.decorate_result(),
+                                   '\nCHECKUP:', gj.to_print_check())
+
+
+
+
 
     def cramer_results(self, status):
         a = ('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n'

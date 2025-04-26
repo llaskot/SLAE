@@ -57,9 +57,9 @@ def main(page: ft.Page):
                     content=ft.DataTable(
                         columns=[
                             ft.DataColumn(ft.Text("Method", text_align=ft.TextAlign.CENTER)),
-                            ft.DataColumn(ft.Text("On", text_align=ft.TextAlign.CENTER)),
-                            ft.DataColumn(ft.Text("process", text_align=ft.TextAlign.CENTER)),
-                            ft.DataColumn(ft.Text("check", text_align=ft.TextAlign.CENTER)),
+                            ft.DataColumn(ft.Text("Roots only", text_align=ft.TextAlign.CENTER)),
+                            ft.DataColumn(ft.Text("Process", text_align=ft.TextAlign.CENTER)),
+                            ft.DataColumn(ft.Text("Check", text_align=ft.TextAlign.CENTER)),
                         ],
                         rows=[
                             ft.DataRow(
@@ -78,9 +78,17 @@ def main(page: ft.Page):
                                     act.checkboxes.ckb_block['gauss'][1],
                                     act.checkboxes.ckb_block['gauss'][2],
 
-                                ]
-                            )
+                                ],
+                            ),
+                            ft.DataRow(
+                                cells=[
+                                    ft.DataCell(ft.Text('Gauss-Jordan', text_align=ft.TextAlign.CENTER)),
+                                    act.checkboxes.ckb_block['gauss_jordan'][0],
+                                    act.checkboxes.ckb_block['gauss_jordan'][1],
+                                    act.checkboxes.ckb_block['gauss_jordan'][2],
 
+                                ],
+                            ),
                         ],
                     ),
                     # bgcolor=ft.Colors.PURPLE,
