@@ -8,17 +8,17 @@ from math_methods.gauss_jordan import GaussJordan
 if __name__ == '__main__':
 
 
-    mat = get_matrix('slae')
+    mat = get_matrix('slae_err1')
     print(to_print(mat)[0])
-    gj = GaussJordan(mat)
-    gj.update_matrix()
-    gj.upgrade_diagonal()
-    print(to_print((gj.converted_matrix, len(gj.converted_matrix)))[0])
-    gj.upgrade_top()
-    print(to_print((gj.converted_matrix, len(gj.converted_matrix)))[0])
-    gj.get_result()
-    print(gj.decorate_result())
-    print(gj.to_print_check())
+    # gj = GaussJordan(mat)
+    # gj.update_matrix()
+    # gj.upgrade_diagonal()
+    # print(to_print((gj.converted_matrix, len(gj.converted_matrix)))[0])
+    # gj.upgrade_top()
+    # print(to_print((gj.converted_matrix, len(gj.converted_matrix)))[0])
+    # gj.get_result()
+    # print(gj.decorate_result())
+    # print(gj.to_print_check())
 
 
 

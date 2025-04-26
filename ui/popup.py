@@ -1,6 +1,6 @@
 from fractions import Fraction
 import flet as ft
-
+from math_methods.validation import Validation
 from functions.process_file import to_print
 
 
@@ -39,6 +39,8 @@ class Popup:
         slae = to_print(self.act.matrix)
         self.act.update_output(slae[0], slae[1])
         self.dialog.open = False
+        self.act.validation = Validation(self.act.matrix)
+        self.act.unblock_analyses(self.act.validation.valid)
         self.page.update()
         self.dialog = None
 

@@ -46,7 +46,7 @@ def main(page: ft.Page):
                 ),
 
                 ft.Container(
-                    content=ft.Button('Analise>', width=25, color="white"),
+                    content=act.btn_analyze,
                     bgcolor=ft.Colors.PURPLE,
                     padding=10,
                     border_radius=5,

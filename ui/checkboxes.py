@@ -4,9 +4,9 @@ import flet as ft
 class Checkboxes:
     def __init__(self):
         self.checkboxes = {
-            'cramer': [ft.Checkbox(), ft.Checkbox(), ft.Checkbox()],
-            'gauss': [ft.Checkbox(), ft.Checkbox(), ft.Checkbox()],
-            'gauss_jordan': [ft.Checkbox(), ft.Checkbox(), ft.Checkbox()],
+            'cramer': [ft.Checkbox(disabled=True), ft.Checkbox(disabled=True), ft.Checkbox(disabled=True)],
+            'gauss': [ft.Checkbox(disabled=True), ft.Checkbox(disabled=True), ft.Checkbox(disabled=True)],
+            'gauss_jordan': [ft.Checkbox(disabled=True), ft.Checkbox(disabled=True), ft.Checkbox(disabled=True)],
 
         }
 
@@ -31,6 +31,13 @@ class Checkboxes:
     @staticmethod
     def wrap_ckb(ckb):
         return ft.DataCell(ft.Container(ckb, alignment=ft.alignment.center))
+
+    def clean_ckb(self):
+        for key in self.checkboxes:
+            for elem in self.checkboxes[key]:
+                elem.value = False
+                elem.disabled = True
+                elem.update()
 
     def get_status(self):
         # 3. Обновляем статусы перед возвратом

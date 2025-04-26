@@ -4,6 +4,7 @@ from checkboxes import Checkboxes
 from math_methods.gauss import Gauss
 from math_methods.cramer import Cramer
 from math_methods.gauss_jordan import GaussJordan
+from math_methods.validation import Validation
 
 
 class Interactive:
@@ -13,6 +14,7 @@ class Interactive:
         self.file_picker = file_picker
         self.file_picker.on_result = self.file_picker_result
         self.history = []
+        self.validation = None;
         self.output = ft.Text(
             color=ft.colors.GREEN_ACCENT_400,  # Зеленый как в Матрице
             font_family="Courier New",  # Моноширинный шрифт
@@ -29,12 +31,14 @@ class Interactive:
 
         self.matrix = None
         self.checkboxes = Checkboxes()
-        self.btn_get_solution = ft.Button("Get solutions", color="white", on_click=self.get_solution)
+        self.btn_get_solution = ft.Button("Get solutions", color="white", on_click=self.get_solution, disabled=True)
         self.btn_clear = ft.ElevatedButton('Erase history',
                                            width=250,
                                            height=20,
                                            bgcolor="#181e15",
                                            on_click=self.erase_history)
+
+        self.btn_analyze = ft.Button('Analyze', width=25, color="white", disabled=True)
 
     def erase_history(self, e):
         self.history.clear()
@@ -48,9 +52,11 @@ class Interactive:
             selected_file = event.files[0]
             self.update_output(f"Selected file: {selected_file.path}")
             self.matrix = get_matrix(selected_file.path)
+            self.validation = Validation(self.matrix)
             slae = to_print(self.matrix)
-            self.update_output(slae[0])
-            self.update_output(slae[1])
+            self.update_output(slae[0], slae[1])
+            self.unblock_analyses(self.validation.valid)
+            self.checkboxes.clean_ckb()
         else:
             self.update_output("No file selected.")
 
@@ -70,7 +76,6 @@ class Interactive:
             self.gauss_results(ckb_status['gauss'])
         if any(ckb_status['gauss_jordan']):
             self.gauss_jordan_results(ckb_status['gauss_jordan'])
-
 
     def gauss_results(self, status):
         a = ('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n'
@@ -99,7 +104,6 @@ class Interactive:
                 tp = to_print((upd_matrix, len(upd_matrix)))
                 self.update_output('\nIN PROCESS STAGE:', tp[0], tp[1], '\nROOTS:', gs.decorate_result(),
                                    '\nCHECKUP:', gs.to_print_check())
-
 
     def gauss_jordan_results(self, status):
         a = ('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n'
@@ -139,10 +143,6 @@ class Interactive:
                 self.update_output('\nIN PROCESS STAGE:', tp[0], tp[1], '\nROOTS:', gj.decorate_result(),
                                    '\nCHECKUP:', gj.to_print_check())
 
-
-
-
-
     def cramer_results(self, status):
         a = ('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n'
              'CRAMER\'s METHOD RESULTS:\n'
@@ -164,3 +164,15 @@ class Interactive:
                 cr.get_result()
                 self.update_output('\nIN PROCESS STAGE:', cr.show_process(), '\nROOTS:', cr.decorate_result(),
                                    '\nCHECKUP:', cr.to_print_check())
+
+    def unblock_analyses(self, valid):
+        self.btn_get_solution.disabled = True
+        self.checkboxes.clean_ckb()
+        if valid:
+            self.btn_analyze.disabled = False
+            self.btn_analyze.update()
+            self.update_output('Pre-validation - Ok!')
+        else:
+            self.btn_analyze.disabled = True
+            self.btn_analyze.update()
+            self.update_output('Pre-validation - Error!', self.validation.validate_error)

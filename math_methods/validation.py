@@ -7,8 +7,8 @@ class Validation:
         self.determinant = None
         self.square_matrix = []
         self.b_matrix = []
+        self.validate_error = None
         self.valid = self.validate()
-        self.validate_error = ''
 
     def validate(self):
         try:
@@ -18,7 +18,7 @@ class Validation:
                 self.validate_error = "difference between variables end equality numbers"
                 return False
             for row in self.matrix[0]:
-                if len(row) != mtrx_var_qty:
+                if len(row)-1 != mtrx_var_qty:
                     self.validate_error = "wrong number of coefficients"
                     return False
         except Exception as e:
