@@ -1,15 +1,20 @@
 from math_methods.gauss import Gauss
 from functions.process_file import get_matrix, to_print
 from fractions import Fraction
+
+from math_methods.jacobi import Jacobi
 from math_methods.validation import Validation
 from math_methods.cramer import Cramer
 from math_methods.gauss_jordan import GaussJordan
+
 
 if __name__ == '__main__':
 
 
     mat = get_matrix('slae_err1')
     print(to_print(mat)[0])
+    print(mat)
+    jac = Jacobi(mat)
     # gj = GaussJordan(mat)
     # gj.update_matrix()
     # gj.upgrade_diagonal()
