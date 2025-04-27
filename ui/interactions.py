@@ -14,6 +14,7 @@ class Interactive:
         self.file_picker = file_picker
         self.file_picker.on_result = self.file_picker_result
         self.history = []
+        self.valid_methods = None
         self.validation = None;
         self.output = ft.Text(
             color=ft.colors.GREEN_ACCENT_400,  # Зеленый как в Матрице
@@ -38,7 +39,8 @@ class Interactive:
                                            bgcolor="#181e15",
                                            on_click=self.erase_history)
 
-        self.btn_analyze = ft.Button('Analyze', width=25, color="white", disabled=True)
+        self.btn_analyze = ft.Button('Analyze', width=25, color="white", disabled=True,
+                                     on_click=self.get_valid_methods)
 
     def erase_history(self, e):
         self.history.clear()
@@ -53,10 +55,16 @@ class Interactive:
             self.update_output(f"Selected file: {selected_file.path}")
             self.matrix = get_matrix(selected_file.path)
             self.validation = Validation(self.matrix)
-            slae = to_print(self.matrix)
-            self.update_output(slae[0], slae[1])
+            if self.validation.valid:
+                slae = to_print(self.matrix)
+                self.update_output(slae[0], slae[1])
+            else:
+                self.update_output('Error: Invalid Matrix')
+
             self.unblock_analyses(self.validation.valid)
             self.checkboxes.clean_ckb()
+            self.btn_get_solution.disabled = True
+            self.btn_get_solution.update()
         else:
             self.update_output("No file selected.")
 
@@ -176,3 +184,17 @@ class Interactive:
             self.btn_analyze.disabled = True
             self.btn_analyze.update()
             self.update_output('Pre-validation - Error!', self.validation.validate_error)
+
+    def get_valid_methods(self, event):
+        self.valid_methods = self.validation.validate_methods()
+        if self.valid_methods['determinant'] == 0:
+            self.update_output('Determinant = 0 \nSLAE do not has a single solution!!!')
+            return
+        self.btn_get_solution.disabled = False
+        self.btn_get_solution.update()
+        self.update_output(str(self.valid_methods))
+        for key in self.valid_methods:
+            if key == 'determinant':
+                continue
+            if self.valid_methods[key]:
+                self.checkboxes.unblock_ckb(key)

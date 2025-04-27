@@ -11,6 +11,9 @@ class Validation:
         self.valid = self.validate()
 
     def validate(self):
+        if self.matrix[1] == 0:
+            self.validate_error = "ERROR file: something wrong with matrix"
+            return False
         try:
             mtrx_var_qty = self.matrix[1]
             mtrx_height = len(self.matrix[0])
@@ -18,7 +21,7 @@ class Validation:
                 self.validate_error = "difference between variables end equality numbers"
                 return False
             for row in self.matrix[0]:
-                if len(row)-1 != mtrx_var_qty:
+                if len(row) - 1 != mtrx_var_qty:
                     self.validate_error = "wrong number of coefficients"
                     return False
         except Exception as e:
@@ -43,3 +46,22 @@ class Validation:
     @staticmethod
     def obtain_determinant(square_mtrx):
         return Matrix(square_mtrx).det()
+
+    def _validate_cramer(self):
+        if 0 < self.matrix[1] < 5:
+            return True
+        else:
+            return False
+
+    def validate_methods(self):
+        res = {
+            'determinant': self.determinant if self.determinant else self.get_determinant(),
+            'cramer': False,
+            'gauss': False,
+            'gauss_jordan': False
+        }
+        if self.determinant != 0:
+            res['cramer'] = self._validate_cramer()
+            res['gauss'] = True
+            res['gauss_jordan'] = True
+        return res

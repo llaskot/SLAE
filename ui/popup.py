@@ -36,8 +36,13 @@ class Popup:
     def close(self, e):
         self.get_field_values()
         self.act.matrix = (self.matrix, self.matrix_len)
-        slae = to_print(self.act.matrix)
-        self.act.update_output(slae[0], slae[1])
+
+        self.act.validation = Validation(self.act.matrix)
+        if self.act.validation.valid:
+            slae = to_print(self.act.matrix)
+            self.act.update_output(slae[0], slae[1])
+        else:
+            self.act.update_output('Error: Invalid Matrix')
         self.dialog.open = False
         self.act.validation = Validation(self.act.matrix)
         self.act.unblock_analyses(self.act.validation.valid)
@@ -90,7 +95,12 @@ class Popup:
         for i in range(self.matrix_len):
             res = []
             for name in self.field_names[i]:
-                res.append(Fraction(self.fields[name].value))
+                try:
+                    res.append(Fraction(self.fields[name].value))
+                except ValueError as e:
+                    print(e)
+                except IndexError as e:
+                    print(e)
             self.matrix.append(res)
 
     def create_popup(self):

@@ -39,6 +39,12 @@ class Checkboxes:
                 elem.disabled = True
                 elem.update()
 
+    def unblock_ckb(self, key):
+        for elem in self.checkboxes[key]:
+            elem.disabled = False
+            elem.update()
+
+
     def get_status(self):
         # 3. Обновляем статусы перед возвратом
         self.ckb_status['cramer'] = [ckb.value for ckb in self.checkboxes['cramer']]
