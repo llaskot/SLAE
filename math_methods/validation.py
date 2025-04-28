@@ -1,8 +1,12 @@
 from sympy import Matrix
+from math_methods.jacobi import Jacobi
 
 
 class Validation:
+    jacobi_order = None
+
     def __init__(self, matrix):
+        Validation.jacobi_order = None
         self.matrix = matrix
         self.determinant = None
         self.square_matrix = []
@@ -53,15 +57,42 @@ class Validation:
         else:
             return False
 
+    def _validate_jacobi(self):
+        """
+        checks diagonal dominance and variables number
+        set static variable jacobi_order in order to jacobi method order
+        :return: Bool
+        """
+        res = {}
+        if 0 < self.matrix[1] <= 20:
+            if not self.square_matrix:
+                self.get_square_matrix()
+            matr = (Jacobi.convert_matrix((self.square_matrix, self.matrix[1])))[0]
+            for i in range(len(matr)):
+                temp = [abs(x) for x in matr[i]]
+                max_value = max(temp)
+                x_ind = [i for i, x in enumerate(temp) if x == max_value]
+                if len(x_ind) != 1:
+                    return False
+                if (sum(temp) - max_value) >= max_value:
+                    return False
+                res[i] = x_ind[0]
+            if len(set(res[x] for x in res.keys())) != self.matrix[1]:
+                return False
+            Validation.jacobi_order = res
+            return True
+
     def validate_methods(self):
         res = {
             'determinant': self.determinant if self.determinant else self.get_determinant(),
             'cramer': False,
             'gauss': False,
-            'gauss_jordan': False
+            'gauss_jordan': False,
+            'jacoby': False
         }
         if self.determinant != 0:
             res['cramer'] = self._validate_cramer()
             res['gauss'] = True
             res['gauss_jordan'] = True
+            res['jacoby'] = self._validate_jacobi()
         return res

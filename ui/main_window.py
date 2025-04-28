@@ -89,6 +89,14 @@ def main(page: ft.Page):
 
                                 ],
                             ),
+                            ft.DataRow(
+                                cells=[
+                                    ft.DataCell(ft.Text('Jacoby', text_align=ft.TextAlign.CENTER)),
+                                    act.checkboxes.ckb_block['jacoby'][0],
+                                    act.checkboxes.ckb_block['jacoby'][1],
+                                    act.checkboxes.ckb_block['jacoby'][2],
+                                ],
+                            ),
                         ],
                     ),
                     # bgcolor=ft.Colors.PURPLE,
