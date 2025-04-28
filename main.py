@@ -8,26 +8,26 @@ from math_methods.cramer import Cramer
 from math_methods.gauss_jordan import GaussJordan
 
 if __name__ == '__main__':
-    mat = get_matrix('jacoby1')
-    print(mat)
-    print(to_print(mat)[0])
-    valid = Validation(mat)
-    print(valid._validate_jacobi())
-    print(valid.jacobi_order)
-    jac = Jacobi(mat)
-    jac.update_matrix()
-    print(jac.converted_matrix)
-    # print(to_print((jac.converted_matrix, mat[1]))[0])
-    print(jac.difference)
-    print(jac.stop_key)
-
-
-    jac.get_result()
-
-    print(jac.x)
-    print(jac.divergence_counter)
-    print(jac.iterations)
-    print(jac.success)
+    # mat = get_matrix('jacoby1')
+    # print(mat)
+    # print(to_print(mat)[0])
+    # valid = Validation(mat)
+    # print(valid._validate_jacobi())
+    # print(valid.jacobi_order)
+    # jac = Jacobi(mat)
+    # jac.update_matrix()
+    # print(jac.converted_matrix)
+    # # print(to_print((jac.converted_matrix, mat[1]))[0])
+    # print(jac.difference)
+    # print(jac.stop_key)
+    #
+    #
+    # jac.get_result()
+    #
+    # print(jac.x)
+    # print(jac.divergence_counter)
+    # print(jac.iterations)
+    # print(jac.success)
 
 
 

@@ -124,17 +124,15 @@ def main(page: ft.Page):
 
     page.add(ft.Container(
         content=act.scroll_column,
-        width=page.width,
+        # width=page.width,
         height=page.height,
         expand=True,
         padding=5,
         margin=5,
-        # bgcolor=ft.Colors.TEAL
-
     ))
     page.add(act.btn_clear)
 
-    page.add(act.output)
+
 
 
 

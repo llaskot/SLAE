@@ -1,3 +1,5 @@
+import copy
+
 import flet as ft
 from functions.process_file import get_matrix, to_print
 from checkboxes import Checkboxes
@@ -5,11 +7,11 @@ from math_methods.gauss import Gauss
 from math_methods.cramer import Cramer
 from math_methods.gauss_jordan import GaussJordan
 from math_methods.validation import Validation
+from math_methods.jacobi import Jacobi
 
 
 class Interactive:
     def __init__(self, file_picker):
-
         self.btn_select_file = ft.IconButton(ft.Icons.FOLDER, on_click=self.pick_file)
         self.file_picker = file_picker
         self.file_picker.on_result = self.file_picker_result
@@ -17,17 +19,20 @@ class Interactive:
         self.valid_methods = None
         self.validation = None;
         self.output = ft.Text(
+            expand=True,
             color=ft.colors.GREEN_ACCENT_400,  # Зеленый как в Матрице
             font_family="Courier New",  # Моноширинный шрифт
             size=18,  # Оптимальный размер
-            selectable=True  # Возможность выделения текста
+            selectable=True,  # Возможность выделения текста
+
         )
-        self.scroll_column = ft.Column(controls=[
+        self.scroll_column = ft.Column([
             self.output
         ],
             scroll=ft.ScrollMode.AUTO,
             expand=True,
-            width=None,
+            # width=None,
+
         )
 
         self.matrix = None
@@ -77,13 +82,15 @@ class Interactive:
 
     def get_solution(self, event):
         ckb_status = self.checkboxes.get_status()
-        print(ckb_status)
+        # print(ckb_status)
         if any(ckb_status['cramer']):
             self.cramer_results(ckb_status['cramer'])
         if any(ckb_status['gauss']):
             self.gauss_results(ckb_status['gauss'])
         if any(ckb_status['gauss_jordan']):
             self.gauss_jordan_results(ckb_status['gauss_jordan'])
+        if any(ckb_status['jacoby']):
+            self.jacoby_results(ckb_status['jacoby'])
 
     def gauss_results(self, status):
         a = ('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n'
@@ -172,6 +179,28 @@ class Interactive:
                 cr.get_result()
                 self.update_output('\nIN PROCESS STAGE:', cr.show_process(), '\nROOTS:', cr.decorate_result(),
                                    '\nCHECKUP:', cr.to_print_check())
+
+    def jacoby_results(self, status):
+        a = ('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n'
+             'JACOBY\'s METHOD RESULTS:\n'
+             '--------------------------------------------------------------------')
+        self.update_output(a)
+        match status:
+            case [True, False, False]:
+                jac = Jacobi(copy.deepcopy(self.matrix))
+                self.update_output('\nROOTS:', jac.decorate_result())
+            case [_, True, False]:
+                jac = Jacobi(copy.deepcopy(self.matrix))
+                jac.get_result()
+                self.update_output('\nIN PROCESS STAGE:\n', jac.show_process(), '\nROOTS:', jac.decorate_result())
+            case [_, False, True]:
+                jac = Jacobi(copy.deepcopy(self.matrix))
+                self.update_output('\nROOTS:', jac.decorate_result(), '\nCHECKUP:', jac.to_print_check())
+            case [_, True, True]:
+                jac = Jacobi(copy.deepcopy(self.matrix))
+                jac.get_result()
+                self.update_output('\nIN PROCESS STAGE:', jac.show_process(), '\nROOTS:', jac.decorate_result(),
+                                   '\nCHECKUP:', jac.to_print_check())
 
     def unblock_analyses(self, valid):
         self.btn_get_solution.disabled = True

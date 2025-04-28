@@ -1,14 +1,15 @@
+from functions.process_file import to_print
 from math_methods.gauss import Gauss
 
 
 class Jacobi(Gauss):
     def __init__(self, matrix):
         super().__init__(matrix)
-        self.matrix = self.convert_matrix(matrix)
-        self.x = {i: 0 for i in range(self.matrix[1])}
-        self.difference = {i: float('inf') for i in range(self.matrix[1])}
+        self.matrix = self.convert_matrix(matrix)[0]
+        self.x = {i: 0 for i in range(self.length)}
+        self.difference = {i: float('inf') for i in range(self.length)}
         self.divergence_counter = 0
-        self.stop_key = {i: False for i in range(self.matrix[1])}
+        self.stop_key = {i: False for i in range(self.length)}
         self.iterations = 0
         self.success = False
 
@@ -21,21 +22,22 @@ class Jacobi(Gauss):
     def update_matrix(self):
         from math_methods.validation import Validation
         if not Validation.jacobi_order:
-            self.converted_matrix = self.matrix[0]
+            self.converted_matrix = self.matrix
             return
         for key in Validation.jacobi_order:
-            self.converted_matrix[Validation.jacobi_order[key]] = self.matrix[0][key]
+            self.converted_matrix[Validation.jacobi_order[key]] = self.matrix[key]
 
     def jacobi_formula(self):
+        # print(self.converted_matrix)
         new_x = {}
-        for i in range(self.matrix[1]):
+        for i in range(self.length):
             new_x[i] = (1 / self.converted_matrix[i][i]) * (self.converted_matrix[i][-1] - self.get_left(i))
         self.check_diff(new_x)
         self.x = new_x
 
     def get_left(self, row_num):
         res = 0
-        for i in range(self.matrix[1]):
+        for i in range(self.length):
             if i == row_num:
                 continue
             res += self.converted_matrix[row_num][i] * self.x[i]
@@ -51,6 +53,7 @@ class Jacobi(Gauss):
             self.difference[key] = diff
 
     def get_result(self):
+        self.update_matrix()
         counter = 0
         while not all(self.stop_key.values()):
             self.jacobi_formula()
@@ -59,5 +62,16 @@ class Jacobi(Gauss):
                 return
         else:
             self.success = True
-            self.result = self.x
+            self.result = {key + 1: self.x[key] for key in self.x}
         self.iterations = counter
+
+    def show_process(self):
+        a = (f'Upgraded{to_print((self.converted_matrix, self.length))[0]}\n\n'
+             f'Success: {self.success}\n'
+             f'Iterations quantity: {self.iterations}\n'
+             f'Number of divergences: {self.divergence_counter}')
+        return a
+
+
+
+
