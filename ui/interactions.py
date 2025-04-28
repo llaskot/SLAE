@@ -6,6 +6,7 @@ from checkboxes import Checkboxes
 from math_methods.gauss import Gauss
 from math_methods.cramer import Cramer
 from math_methods.gauss_jordan import GaussJordan
+from math_methods.seidel import Seidel
 from math_methods.validation import Validation
 from math_methods.jacobi import Jacobi
 
@@ -91,6 +92,8 @@ class Interactive:
             self.gauss_jordan_results(ckb_status['gauss_jordan'])
         if any(ckb_status['jacoby']):
             self.jacoby_results(ckb_status['jacoby'])
+        if any(ckb_status['seidel']):
+            self.seidel_results(ckb_status['seidel'])
 
     def gauss_results(self, status):
         a = ('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n'
@@ -165,17 +168,19 @@ class Interactive:
         self.update_output(a)
         match status:
             case [True, False, False]:
-                cr = Cramer(self.matrix)
+                cr = Cramer(self.matrix, self.validation)
+                cr.get_result()
                 self.update_output('\nROOTS:', cr.decorate_result())
             case [_, True, False]:
-                cr = Cramer(self.matrix)
+                cr = Cramer(self.matrix, self.validation)
                 cr.get_result()
                 self.update_output('\nIN PROCESS STAGE:\n', cr.show_process(), '\nROOTS:', cr.decorate_result())
             case [_, False, True]:
-                cr = Cramer(self.matrix)
+                cr = Cramer(self.matrix, self.validation)
+                cr.get_result()
                 self.update_output('\nROOTS:', cr.decorate_result(), '\nCHECKUP:', cr.to_print_check())
             case [_, True, True]:
-                cr = Cramer(self.matrix)
+                cr = Cramer(self.matrix, self.validation)
                 cr.get_result()
                 self.update_output('\nIN PROCESS STAGE:', cr.show_process(), '\nROOTS:', cr.decorate_result(),
                                    '\nCHECKUP:', cr.to_print_check())
@@ -187,7 +192,9 @@ class Interactive:
         self.update_output(a)
         match status:
             case [True, False, False]:
+                print(self.matrix)
                 jac = Jacobi(copy.deepcopy(self.matrix))
+                jac.get_result()
                 self.update_output('\nROOTS:', jac.decorate_result())
             case [_, True, False]:
                 jac = Jacobi(copy.deepcopy(self.matrix))
@@ -195,12 +202,38 @@ class Interactive:
                 self.update_output('\nIN PROCESS STAGE:\n', jac.show_process(), '\nROOTS:', jac.decorate_result())
             case [_, False, True]:
                 jac = Jacobi(copy.deepcopy(self.matrix))
+                jac.get_result()
                 self.update_output('\nROOTS:', jac.decorate_result(), '\nCHECKUP:', jac.to_print_check())
             case [_, True, True]:
                 jac = Jacobi(copy.deepcopy(self.matrix))
                 jac.get_result()
                 self.update_output('\nIN PROCESS STAGE:', jac.show_process(), '\nROOTS:', jac.decorate_result(),
                                    '\nCHECKUP:', jac.to_print_check())
+
+
+    def seidel_results(self, status):
+        a = ('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n'
+             'SEIDEL\'s METHOD RESULTS:\n'
+             '--------------------------------------------------------------------')
+        self.update_output(a)
+        match status:
+            case [True, False, False]:
+                sd = Seidel(copy.deepcopy(self.matrix))
+                self.update_output('\nROOTS:', sd.decorate_result())
+            case [_, True, False]:
+                sd = Seidel(copy.deepcopy(self.matrix))
+                sd.get_result()
+                self.update_output('\nIN PROCESS STAGE:\n', sd.show_process(), '\nROOTS:', sd.decorate_result())
+            case [_, False, True]:
+                sd = Seidel(copy.deepcopy(self.matrix))
+                self.update_output('\nROOTS:', sd.decorate_result(), '\nCHECKUP:', sd.to_print_check())
+            case [_, True, True]:
+                sd = Seidel(copy.deepcopy(self.matrix))
+                sd.get_result()
+                self.update_output('\nIN PROCESS STAGE:', sd.show_process(), '\nROOTS:', sd.decorate_result(),
+                                   '\nCHECKUP:', sd.to_print_check())
+
+
 
     def unblock_analyses(self, valid):
         self.btn_get_solution.disabled = True

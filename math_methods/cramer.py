@@ -5,9 +5,10 @@ from .validation import Validation
 
 
 class Cramer(Gauss):
-    def __init__(self, matrix: (list[list], int)):
+    def __init__(self, matrix: (list[list], int), validation):
         super().__init__(matrix)
-        self.vld = Validation(matrix)
+        # self.vld = Validation(matrix)
+        self.vld = validation
         self.a_matrix = self.vld.square_matrix
         self.b_matrix = self.vld.b_matrix
         self.determinant = self.vld.get_determinant()

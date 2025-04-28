@@ -97,6 +97,14 @@ def main(page: ft.Page):
                                     act.checkboxes.ckb_block['jacoby'][2],
                                 ],
                             ),
+                            ft.DataRow(
+                                cells=[
+                                    ft.DataCell(ft.Text('Seidel', text_align=ft.TextAlign.CENTER)),
+                                    act.checkboxes.ckb_block['seidel'][0],
+                                    act.checkboxes.ckb_block['seidel'][1],
+                                    act.checkboxes.ckb_block['seidel'][2],
+                                ],
+                            ),
                         ],
                     ),
                     # bgcolor=ft.Colors.PURPLE,
@@ -117,7 +125,7 @@ def main(page: ft.Page):
         ),
         bgcolor="#181e15",
         padding=5,
-        height=250
+        height=300
     )
 
     page.add(row)

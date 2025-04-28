@@ -8,11 +8,11 @@ from math_methods.cramer import Cramer
 from math_methods.gauss_jordan import GaussJordan
 
 if __name__ == '__main__':
-    # mat = get_matrix('jacoby1')
+    # mat = get_matrix('seidel.txt')
     # print(mat)
     # print(to_print(mat)[0])
     # valid = Validation(mat)
-    # print(valid._validate_jacobi())
+    # print(valid.validate_seidel())
     # print(valid.jacobi_order)
     # jac = Jacobi(mat)
     # jac.update_matrix()

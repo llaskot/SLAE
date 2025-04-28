@@ -82,17 +82,29 @@ class Validation:
             Validation.jacobi_order = res
             return True
 
+    def _validate_seidel(self):
+        if not self.square_matrix:
+            self.get_square_matrix()
+        m = Matrix(self.square_matrix)
+        if m.is_positive_definite and m == m.T:
+            return True
+        return False
+
+
+
     def validate_methods(self):
         res = {
             'determinant': self.determinant if self.determinant else self.get_determinant(),
             'cramer': False,
             'gauss': False,
             'gauss_jordan': False,
-            'jacoby': False
+            'jacoby': False,
+            'seidel': False
         }
         if self.determinant != 0:
             res['cramer'] = self._validate_cramer()
             res['gauss'] = True
             res['gauss_jordan'] = True
             res['jacoby'] = self._validate_jacobi()
+            res['seidel'] = True if res['jacoby'] else self._validate_seidel()
         return res

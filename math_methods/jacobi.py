@@ -27,8 +27,7 @@ class Jacobi(Gauss):
         for key in Validation.jacobi_order:
             self.converted_matrix[Validation.jacobi_order[key]] = self.matrix[key]
 
-    def jacobi_formula(self):
-        # print(self.converted_matrix)
+    def formula(self):
         new_x = {}
         for i in range(self.length):
             new_x[i] = (1 / self.converted_matrix[i][i]) * (self.converted_matrix[i][-1] - self.get_left(i))
@@ -56,7 +55,7 @@ class Jacobi(Gauss):
         self.update_matrix()
         counter = 0
         while not all(self.stop_key.values()):
-            self.jacobi_formula()
+            self.formula()
             counter += 1
             if self.divergence_counter > 100:
                 return
