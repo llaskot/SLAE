@@ -46,10 +46,8 @@ class Gauss:
         # print(solution)
 
     def decorate_result(self) -> str:
-        print('RESULT BEFORE',self.result)
         if not self.result:
             self.get_result()
-            print('RESULT IN', self.result)
 
         temp = []
         for i in range(1, self.length+1):

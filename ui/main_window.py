@@ -21,7 +21,7 @@ def main(page: ft.Page):
                         controls=[
                             ft.Row(
                                 [
-                                    ft.Text('Fill in Manually', size=20),
+                                    ft.Text('Manual input.   Var-s number:', size=20),
                                     popup.field_var_number,
                                     btn_manual_input
                                 ],
@@ -34,27 +34,30 @@ def main(page: ft.Page):
                                 ],
                                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN
                             )
-                        ]
+                        ], alignment=ft.MainAxisAlignment.CENTER
                     ),
-                    bgcolor=ft.Colors.TEAL,
+                    # bgcolor=ft.Colors.TEAL,
                     padding=5,
                     border_radius=5,
                     width=400,
-                    height=100
+
                     # expand=True
 
                 ),
 
                 ft.Container(
                     content=act.btn_analyze,
-                    bgcolor=ft.Colors.PURPLE,
+                    bgcolor="#164701",
                     padding=10,
                     border_radius=5,
-                    expand=True
+                    expand=True,
+
                 ),
 
                 ft.Container(
                     content=ft.DataTable(
+                        heading_row_height=35.0,
+                        data_row_max_height=38.0,
                         columns=[
                             ft.DataColumn(ft.Text("Method", text_align=ft.TextAlign.CENTER)),
                             ft.DataColumn(ft.Text("Roots only", text_align=ft.TextAlign.CENTER)),
@@ -64,7 +67,9 @@ def main(page: ft.Page):
                         rows=[
                             ft.DataRow(
                                 cells=[
-                                    ft.DataCell(ft.Text('Cramer\'s', text_align=ft.TextAlign.CENTER)),
+                                    ft.DataCell(ft.Container(
+                                        ft.Text('Cramer\'s', text_align=ft.TextAlign.CENTER),
+                                        padding=ft.padding.only(bottom=10))),
                                     act.checkboxes.ckb_block['cramer'][0],
                                     act.checkboxes.ckb_block['cramer'][1],
                                     act.checkboxes.ckb_block['cramer'][2],
@@ -73,7 +78,9 @@ def main(page: ft.Page):
                             ),
                             ft.DataRow(
                                 cells=[
-                                    ft.DataCell(ft.Text('Gauss\'s', text_align=ft.TextAlign.CENTER)),
+                                    ft.DataCell(ft.Container(
+                                        ft.Text('Gauss\'s', text_align=ft.TextAlign.CENTER),
+                                        padding=ft.padding.only(bottom=10))),
                                     act.checkboxes.ckb_block['gauss'][0],
                                     act.checkboxes.ckb_block['gauss'][1],
                                     act.checkboxes.ckb_block['gauss'][2],
@@ -82,7 +89,9 @@ def main(page: ft.Page):
                             ),
                             ft.DataRow(
                                 cells=[
-                                    ft.DataCell(ft.Text('Gauss-Jordan', text_align=ft.TextAlign.CENTER)),
+                                    ft.DataCell(ft.Container(
+                                        ft.Text('Gauss-Jordan\'s', text_align=ft.TextAlign.CENTER),
+                                        padding=ft.padding.only(bottom=10))),
                                     act.checkboxes.ckb_block['gauss_jordan'][0],
                                     act.checkboxes.ckb_block['gauss_jordan'][1],
                                     act.checkboxes.ckb_block['gauss_jordan'][2],
@@ -91,7 +100,9 @@ def main(page: ft.Page):
                             ),
                             ft.DataRow(
                                 cells=[
-                                    ft.DataCell(ft.Text('Jacoby', text_align=ft.TextAlign.CENTER)),
+                                    ft.DataCell(ft.Container(
+                                        ft.Text('Jacoby\'s', text_align=ft.TextAlign.CENTER),
+                                        padding=ft.padding.only(bottom=10))),
                                     act.checkboxes.ckb_block['jacoby'][0],
                                     act.checkboxes.ckb_block['jacoby'][1],
                                     act.checkboxes.ckb_block['jacoby'][2],
@@ -99,7 +110,9 @@ def main(page: ft.Page):
                             ),
                             ft.DataRow(
                                 cells=[
-                                    ft.DataCell(ft.Text('Seidel', text_align=ft.TextAlign.CENTER)),
+                                    ft.DataCell(ft.Container(
+                                        ft.Text('Seidel\'s', text_align=ft.TextAlign.CENTER),
+                                        padding=ft.padding.only(bottom=10))),
                                     act.checkboxes.ckb_block['seidel'][0],
                                     act.checkboxes.ckb_block['seidel'][1],
                                     act.checkboxes.ckb_block['seidel'][2],
@@ -114,7 +127,7 @@ def main(page: ft.Page):
                 # Колонка 4 (оранжевый фон)
                 ft.Container(
                     content=act.btn_get_solution,
-                    bgcolor=ft.Colors.ORANGE,
+                    bgcolor="#164701",
                     padding=10,
                     border_radius=5,
                     expand=True
@@ -123,9 +136,17 @@ def main(page: ft.Page):
             ],
 
         ),
-        bgcolor="#181e15",
+        # bgcolor="#181e15",
+        gradient=ft.LinearGradient(
+            begin=ft.alignment.top_left,
+            end=ft.alignment.bottom_right,
+            colors=["#031a02", "#042402"],
+        ),
         padding=5,
-        height=300
+        height=230,
+        border=ft.Border(
+            bottom=ft.BorderSide(1, "#38d42f")
+        )
     )
 
     page.add(row)
@@ -139,9 +160,6 @@ def main(page: ft.Page):
         margin=5,
     ))
     page.add(act.btn_clear)
-
-
-
 
 
 if __name__ == "__main__":

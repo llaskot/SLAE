@@ -41,7 +41,9 @@ class Checkboxes:
 
     @staticmethod
     def wrap_ckb(ckb):
-        return ft.DataCell(ft.Container(ckb, alignment=ft.alignment.center))
+        return ft.DataCell(ft.Container(ckb, alignment=ft.alignment.center,
+                                        # bgcolor= "#46e602",
+                                        padding=ft.padding.only(bottom=10)))
 
     def clean_ckb(self):
         for key in self.checkboxes:

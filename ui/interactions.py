@@ -38,15 +38,31 @@ class Interactive:
 
         self.matrix = None
         self.checkboxes = Checkboxes()
-        self.btn_get_solution = ft.Button("Get solutions", color="white", on_click=self.get_solution, disabled=True)
+        self.btn_get_solution = ft.Button("Get solutions",  height=100, color="white",
+                                          on_click=self.get_solution, disabled=True,
+                                          style=ft.ButtonStyle(
+                                              shape=ft.RoundedRectangleBorder(radius=5),
+                                              bgcolor={
+                                                  ft.ControlState.DISABLED: "#535426",
+                                                  ft.ControlState.DEFAULT: "#46e602"
+                                              }
+                                          )
+                                          )
         self.btn_clear = ft.ElevatedButton('Erase history',
                                            width=250,
                                            height=20,
                                            bgcolor="#181e15",
                                            on_click=self.erase_history)
 
-        self.btn_analyze = ft.Button('Analyze', width=25, color="white", disabled=True,
-                                     on_click=self.get_valid_methods)
+        self.btn_analyze = ft.Button('Analyze',  height=100, color="white", disabled=True,
+                                     on_click=self.get_valid_methods,
+                                     style=ft.ButtonStyle(
+                                         shape=ft.RoundedRectangleBorder(radius=5),
+                                         bgcolor={
+                                             ft.ControlState.DISABLED: "#535426",
+                                             ft.ControlState.DEFAULT: "#d2d609"
+                                         }
+                                     ))
 
     def erase_history(self, e):
         self.history.clear()
@@ -210,7 +226,6 @@ class Interactive:
                 self.update_output('\nIN PROCESS STAGE:', jac.show_process(), '\nROOTS:', jac.decorate_result(),
                                    '\nCHECKUP:', jac.to_print_check())
 
-
     def seidel_results(self, status):
         a = ('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n'
              'SEIDEL\'s METHOD RESULTS:\n'
@@ -232,8 +247,6 @@ class Interactive:
                 sd.get_result()
                 self.update_output('\nIN PROCESS STAGE:', sd.show_process(), '\nROOTS:', sd.decorate_result(),
                                    '\nCHECKUP:', sd.to_print_check())
-
-
 
     def unblock_analyses(self, valid):
         self.btn_get_solution.disabled = True
