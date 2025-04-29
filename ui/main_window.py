@@ -1,6 +1,6 @@
 import flet as ft
-from interactions import Interactive
-from popup import Popup
+from ui.interactions import Interactive
+from ui.popup import Popup
 
 
 def main(page: ft.Page):
@@ -162,6 +162,6 @@ def main(page: ft.Page):
     page.add(act.btn_clear)
 
 
-if __name__ == "__main__":
-    ft.app(target=main)
-    # ft.app(target=main, view=ft.WEB_BROWSER, port=64928)
+# if __name__ == "__main__":
+#     ft.app(target=main)
+#     # ft.app(target=main, view=ft.WEB_BROWSER, port=64928)

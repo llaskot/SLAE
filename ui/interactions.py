@@ -2,7 +2,7 @@ import copy
 
 import flet as ft
 from functions.process_file import get_matrix, to_print
-from checkboxes import Checkboxes
+from ui.checkboxes import Checkboxes
 from math_methods.gauss import Gauss
 from math_methods.cramer import Cramer
 from math_methods.gauss_jordan import GaussJordan
